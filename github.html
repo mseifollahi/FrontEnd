@@ -1,0 +1,213 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>GitHub User Search App</title>  
+    <style>  
+        body {  
+            font-family: 'Arial', sans-serif;  
+            background-color: rgb(8, 10, 30); 
+            color: #FFF;   
+            text-align: center;  
+        }  
+        .container {  
+            max-width: 600px;  
+            margin: 50px auto;  
+            padding: 20px;  
+            border-radius: 8px;  
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);  
+            background-color:rgba(89, 111, 172, 0.2) ;
+            backdrop-filter: blur(10px);   
+        } 
+        .first{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .internal{
+            display: flex;
+            align-items: center;
+        }
+        span{
+            margin-left: 5px;
+        }
+        .second{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        } 
+        input {  
+            width: 70%; 
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-left: 30px;  
+            border: 1px solid #ccc;  
+            background-color:rgba(239, 239, 241, 0.9);
+            border-radius: 5px;    
+        } 
+        #search-svg{
+            width: 20px;  
+            height: 20px; 
+            color: #007bff ;
+            z-index: 1;
+            margin-right: -30px;
+        } 
+        button {  
+            height: 37px;
+            padding: 10px 20px;  
+            border: none;  
+            border-radius: 5px;  
+            cursor: pointer;  
+            background-color: #007bff;  
+            color: white;
+            margin-left: -82px;  
+        } 
+        button:hover {  
+            background-color: #0056b3;  
+        }   
+        #user-info {  
+            margin-top: 20px;  
+            padding-bottom: 20px;
+            background-color:#596fac33 ;
+        }  
+        #details{
+            width: 50%;
+            margin: auto;
+            padding: 10px;
+            background-color: rgba(89, 111, 172, 0.2) ;
+            backdrop-filter: blur(10px); 
+            border-radius: 5px;
+        }
+        .toggle{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .toggle svg{
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+        }
+        img {  
+            border-radius: 50%;  
+            width: 100px;  
+            height: 100px; 
+            margin-top: 5px; 
+        }  
+        svg {  
+            cursor: pointer;  
+            width: 24px;  
+            height: 24px;  
+        }  
+    </style>  
+</head>  
+<body>  
+<div class="container">  
+    <div class="first">
+        <h1>GitHub User Search</h1> 
+        <div class="internal">
+            <svg id="theme-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
+                <path d="M10 2a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0v-1.5A.75.75 0 0 1 10 2ZM10 15a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0v-1.5A.75.75 0 0 1 10 15ZM10 7a3 3 0 1 0 0 6 3 3 0 0 0 0-6ZM15.657 5.404a.75.75 0 1 0-1.06-1.06l-1.061 1.06a.75.75 0 0 0 1.06 1.06l1.06-1.06ZM6.464 14.596a.75.75 0 1 0-1.06-1.06l-1.06 1.06a.75.75 0 0 0 1.06 1.06l1.06-1.06ZM18 10a.75.75 0 0 1-.75.75h-1.5a.75.75 0 0 1 0-1.5h1.5A.75.75 0 0 1 18 10ZM5 10a.75.75 0 0 1-.75.75h-1.5a.75.75 0 0 1 0-1.5h1.5A.75.75 0 0 1 5 10ZM14.596 15.657a.75.75 0 0 0 1.06-1.06l-1.06-1.061a.75.75 0 1 0-1.06 1.06l1.06 1.06ZM5.404 6.464a.75.75 0 0 0 1.06-1.06l-1.06-1.06a.75.75 0 1 0-1.061 1.06l1.06 1.06Z" />
+            </svg>   
+            <span id="theme-text">LIGHT</span>
+        </div>
+    </div>
+    <div class="second">
+        <svg id="search-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
+            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z" clip-rule="evenodd" />
+        </svg> 
+        <input type="text" id="username" placeholder="Enter GitHub Username..." />
+        <button id="search-btn">Search</button>  
+    </div>
+    <div id="user-info" style="display: none;">  
+        <img id="avatar" src="" alt="User Profile" />  
+        <p id="name">User Name: </p>  
+        <p id="bio">Bio: </p>  
+        <div id="details">
+            <p id="repos">Public Repos: </p>  
+            <p id="followers">Followers: </p> 
+            <p id="following">Following: </p>
+            <div class="toggle">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
+                    <path fill-rule="evenodd" d="m9.69 18.933.003.001C9.89 19.02 10 19 10 19s.11.02.308-.066l.002-.001.006-.003.018-.008a5.741 5.741 0 0 0 .281-.14c.186-.096.446-.24.757-.433.62-.384 1.445-.966 2.274-1.765C15.302 14.988 17 12.493 17 9A7 7 0 1 0 3 9c0 3.492 1.698 5.988 3.355 7.584a13.731 13.731 0 0 0 2.273 1.765 11.842 11.842 0 0 0 .976.544l.062.029.018.008.006.003ZM10 11.25a2.25 2.25 0 1 0 0-4.5 2.25 2.25 0 0 0 0 4.5Z" clip-rule="evenodd" />
+                </svg>
+                <p id="location">Location: </p> 
+            </div> 
+            <div class="toggle">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
+                    <path d="M12.232 4.232a2.5 2.5 0 0 1 3.536 3.536l-1.225 1.224a.75.75 0 0 0 1.061 1.06l1.224-1.224a4 4 0 0 0-5.656-5.656l-3 3a4 4 0 0 0 .225 5.865.75.75 0 0 0 .977-1.138 2.5 2.5 0 0 1-.142-3.667l3-3Z" />
+                    <path d="M11.603 7.963a.75.75 0 0 0-.977 1.138 2.5 2.5 0 0 1 .142 3.667l-3 3a2.5 2.5 0 0 1-3.536-3.536l1.225-1.224a.75.75 0 0 0-1.061-1.06l-1.224 1.224a4 4 0 1 0 5.656 5.656l3-3a4 4 0 0 0-.225-5.865Z" />
+                </svg>
+                <p id="website">Website:</p>
+            </div>
+        </div>
+    </div>  
+      
+</div>  
+<script>  
+    const searchBtn = document.getElementById('search-btn');  
+    const usernameInput = document.getElementById('username');  
+    const userInfo = document.getElementById('user-info');  
+    const nameElement = document.getElementById('name');  
+    const bioElement = document.getElementById('bio');  
+    const locationElement = document.getElementById('location');
+    const websiteElement = document.getElementById('website');  
+    const reposElement = document.getElementById('repos');  
+    const followersElement = document.getElementById('followers');  
+    const followingElement = document.getElementById('following'); 
+    const avatarElement = document.getElementById('avatar');  
+    const themeToggle = document.getElementById('theme-toggle');  
+    const themeText = document.getElementById('theme-text');  
+    
+    let isDarkTheme = false;  
+
+    searchBtn.addEventListener('click', async () => {  
+        const username = usernameInput.value;  
+        if (username) {  
+            const response = await fetch(`https://api.github.com/users/${username}`);  
+            const data = await response.json();  
+
+            if (response.ok) {  
+                avatarElement.src = data.avatar_url;  
+                nameElement.textContent = `User Name: ${data.name || 'No name available'}`;  
+                bioElement.textContent = `Bio: ${data.bio || 'No bio available'}`;  
+                locationElement.textContent = `Location: ${data.location || 'No location available'}`; 
+                websiteElement.textContent = `Website: ${data.website || 'No website available'}`;   
+                reposElement.textContent = `Public Repos: ${data.public_repos || 0}`;  
+                followersElement.textContent = `Followers: ${data.followers || 0}`;
+                followingElement.textContent = `Following: ${data.following || 0}`;  
+                userInfo.style.display = 'block';  
+            } else {  
+                alert('User not found.');  
+                userInfo.style.display = 'none';  
+            }  
+        }  
+    });  
+    themeToggle.addEventListener('click', () => {  
+        isDarkTheme = !isDarkTheme;  
+        if (isDarkTheme) {  
+            document.body.style.backgroundColor = '#080a1e';  
+            document.body.style.color = 'white';  
+            themeText.textContent = 'LIGHT';  
+            themeToggle.innerHTML = `<path d="M10 2a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0v-1.5A.75.75 0 0 1 10 2ZM10 15a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0v-1.5A.75.75 0 0 1 10 15ZM10 7a3 3 0 1 0 0 6 3 3 0 0 0 0-6ZM15.657 5.404a.75.75 0 1 0-1.06-1.06l-1.061 1.06a.75.75 0 0 0 1.06 1.06l1.06-1.06ZM6.464 14.596a.75.75 0 1 0-1.06-1.06l-1.06 1.06a.75.75 0 0 0 1.06 1.06l1.06-1.06ZM18 10a.75.75 0 0 1-.75.75h-1.5a.75.75 0 0 1 0-1.5h1.5A.75.75 0 0 1 18 10ZM5 10a.75.75 0 0 1-.75.75h-1.5a.75.75 0 0 1 0-1.5h1.5A.75.75 0 0 1 5 10ZM14.596 15.657a.75.75 0 0 0 1.06-1.06l-1.06-1.061a.75.75 0 1 0-1.06 1.06l1.06 1.06ZM5.404 6.464a.75.75 0 0 0 1.06-1.06l-1.06-1.06a.75.75 0 1 0-1.061 1.06l1.06 1.06Z" />`;  
+            userInfo.style.backgroundColor = '#596fac33';   
+            userInfo.style.color = 'white';   
+        } else {  
+            document.body.style.backgroundColor = '#f0f0f0';  
+            document.body.style.color = 'black';  
+            themeText.textContent = 'DARK';  
+            themeToggle.innerHTML = `<path fill-rule="evenodd" d="M7.455 2.004a.75.75 0 0 1 .26.77 7 7 0 0 0 9.958 7.967.75.75 0 0 1 1.067.853A8.5 8.5 0 1 1 6.647 1.921a.75.75 0 0 1 .808.083Z" clip-rule="evenodd" />`;  
+            userInfo.style.backgroundColor = 'white';  
+            userInfo.style.color = 'black'; 
+        }  
+    });  
+    const defaultUsername = 'octocat'; 
+    usernameInput.value = defaultUsername;  
+    searchBtn.click();  
+</script>  
+</body>  
+</html>
+
+  
